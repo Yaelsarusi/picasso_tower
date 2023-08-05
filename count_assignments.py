@@ -140,12 +140,6 @@ class RelativeHint(Hint):
         2) An Absolute hint that links between the existing (or new) floor assignment that thas the first attribute, and a future floor assignmnet of the second attribute.
         """
         
-        # get_options_if_valid = self.get_options_if_valid(all_animal_options, floor_assignments)
-        # if not get_options_if_valid.is_valid:
-        #     return get_options_if_valid.floor_assignment
-        # else:
-        #     animal_options = get_options_if_valid.new_options
-        
         animal_options = all_animal_options
         color_options = all_color_options
         floor_options = empty_floors
@@ -158,28 +152,18 @@ class RelativeHint(Hint):
                 animal_options = get_options_if_valid.new_options
 
         if isinstance(self._attr1, Floor):
-            if self._attr1 in empty_floors:
-                floor_options = [self._attr1]
-            elif self._attr2 in empty_floors:
-                floor_assignment_with_attr1 = list(filter(lambda x: self._attr1 in x, floor_assignments))
-                new_floor = floor_assignment_with_attr1[0].floor.value - self._difference
-                if new_floor < 6 and new_floor > 0:
-                    return [(None, [AbsoluteHint(Floor(new_floor), self._attr2 )])]
-                return []
+            get_options_if_valid = self.get_options_if_valid(empty_floors, floor_assignments)
+            if not get_options_if_valid.is_valid:
+                return get_options_if_valid.floor_assignment
             else:
-                return []
+                floor_options = get_options_if_valid.new_options
         
         if isinstance(self._attr1, Color):
-            if self._attr1 in all_color_options:
-                color_options = [self._attr1]
-            elif self._attr2 in all_color_options:
-                floor_assignment_with_attr1 = list(filter(lambda x: self._attr1 in x, floor_assignments))
-                new_floor = floor_assignment_with_attr1[0].floor.value - self._difference
-                if new_floor < 6 and new_floor > 0:
-                    return [(None, [AbsoluteHint(Floor(new_floor), self._attr2 )])]
-                return []
+            get_options_if_valid = self.get_options_if_valid(all_color_options, floor_assignments)
+            if not get_options_if_valid.is_valid:
+                return get_options_if_valid.floor_assignment
             else:
-                return []
+                color_options = get_options_if_valid.new_options
             
         possible_options = []
         for floor in floor_options:
