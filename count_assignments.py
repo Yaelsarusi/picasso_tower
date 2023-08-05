@@ -139,7 +139,7 @@ class RelativeHint(Hint):
         1) A floor assignment to satisfy the first attribute of the hint if it's not already in the floor assignments given.
         2) An Absolute hint that links between the existing (or new) floor assignment that thas the first attribute, and a future floor assignmnet of the second attribute.
         """
-        
+
         animal_options = all_animal_options
         color_options = all_color_options
         floor_options = empty_floors
@@ -482,54 +482,3 @@ def test():
 
 if __name__ == '__main__':
     test()
-
-# def is_valid_picasso_tower(tower_assignment: List[FloorAssignment], hints: List[Hint]):
-#     # Define your rule here
-#     for hint in hints:
-#         if not hint.valid_tower_assignment(tower_assignment):
-#             return False
-#     return True
-
-# def backtrack(cur_floor: int, picasso_tower: List[FloorAssignment], animal_options: List[Animal], color_options: List[Color], hints: List[Hint]):
-#     is_valid = is_valid_picasso_tower(picasso_tower, hints)
-#     if not is_valid:
-#         picasso_tower[cur_floor].animal = None
-#         picasso_tower[cur_floor].color = None
-#         return 0
-#     # We've assigned all animals and colors, and at this point the tower is full and valid
-#     if len(animal_options) == 0 and len(color_options) == 0:
-#         return 1
-#     assignment_count = 0
-#     for idx, cur_animal in enumerate(animal_options):
-#         for idx, cur_color in enumerate(color_options):
-#             picasso_tower[cur_floor].animal = cur_animal
-#             picasso_tower[cur_floor].color = cur_color
-#             assignment_count += backtrack(cur_floor + 1, 
-#                                         picasso_tower, 
-#                                         animal_options[0:idx] + animal_options[idx+1:], 
-#                                         color_options[0:idx] + color_options[idx +1:], 
-#                                         hints)
-#     return assignment_count
-
-
-# def get_starting_assigment() -> List[FloorAssignment]:
-#     floors_assignments = []
-#     for i in range(1, 6):
-#         floors_assignments.append(FloorAssignment(floor=Floor(i), color=None, animal=None))
-#     return floors_assignments
-
-
-# def count_assignments(hints: List[Hint]): # Reminder: Don't change the function signature
-#     """
-#     Given a list of Hint objects, return the number of
-#     valid assignments that satisfy these hints.
-#     TODO: Needs to be implemented
-#     """
-#     possible_assigment: List[FloorAssignment] = get_starting_assigment()
-
-#     # Call the backtrack function to find all valid assignments
-
-#     animal_options = [Animal.Bird, Animal.Chicken, Animal.Frog, Animal.Grasshopper, Animal.Rabbit]
-#     color_options = [Color.Blue, Color.Green, Color.Orange, Color.Red, Color.Yellow]
-    
-#     return backtrack(0, possible_assigment, animal_options, color_options, hints)
