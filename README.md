@@ -76,21 +76,21 @@ going.
 You may make any changes to the file and the classes. You may (and are advised) to create
 new additional classes and / or helper functions. The sole requirement is that the API of the
 function count_assignments stays the same:
-● The function's name must stay count_assignments.
-● Its input is a single argument which is a list of Hint objects (instances of the sub-classes
+* The function's name must stay count_assignments.
+* Its input is a single argument which is a list of Hint objects (instances of the sub-classes
 AbsoluteHint, RelativeHint, NeighborHint).
-● The API for initializing these sub-classes must also stay the same, although their
+* The API for initializing these sub-classes must also stay the same, although their
 implementation may be modified.
-● The returned value is an integer specifying the amount of unique valid assignments that
+* The returned value is an integer specifying the amount of unique valid assignments that
 satisfy the input hints
 
 General guidelines:
-● Your program must be written in Python 3 (the attached code is Python 3).
-● Keep in mind that there are only 14,400 possible assignments. Your solution does not
+* Your program must be written in Python 3 (the attached code is Python 3).
+* Keep in mind that there are only 14,400 possible assignments. Your solution does not
 need to support a generalized version of the problem described.
-● Test your code to make sure it deals with all the edge cases.
-● Keep the code simple and with a Pythonic approach.
-● Your code should be documented and conform to Python style guidelines.
-● Your submission should only contain text files, do not submit binary files.
+* Test your code to make sure it deals with all the edge cases.
+* Keep the code simple and with a Pythonic approach.
+* Your code should be documented and conform to Python style guidelines.
+* Your submission should only contain text files, do not submit binary files.
 
 Good luck!
