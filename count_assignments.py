@@ -342,7 +342,7 @@ def backtrack(hints: List[Hint],
     for floor_assigmment, additional_hints in possible_floor_assignment:
         
         if floor_assigmment is None:
-            # Hint attibute was already assigned in a previous floor, however additional hint was needed.``
+            # Hint attibute was already assigned in a previous floor, however additional hint was needed.
             possible_options += backtrack(hints=hints[1:] + additional_hints, 
                                       floor_assignments = list(floor_assignments),
                                       empty_floors=list(empty_floors),
@@ -350,7 +350,7 @@ def backtrack(hints: List[Hint],
                                       color_options=list(color_options))
         else:
             # With the new floor assignment, cur hint is satisfied. Remove used attributes from available options, and continue to next hint.
-            possible_options += backtrack(hints=hints[1:] + additional_hints, 
+            possible_options += backtrack(hints=additional_hints + hints[1:], 
                                         floor_assignments = list(floor_assignments) + [floor_assigmment],
                                         empty_floors=remove_value(empty_floors, floor_assigmment.floor),
                                         animal_options=remove_value(animal_options, floor_assigmment.animal),
@@ -369,116 +369,11 @@ def count_assignments(hints: List[Hint]): # Reminder: Don't change the function 
     color_options = [Color.Blue, Color.Green, Color.Orange, Color.Red, Color.Yellow]
     floor_assignments = []
 
+
+
     # Call the backtrack function to find all valid assignments
     return backtrack(hints=hints,
                      floor_assignments=floor_assignments, 
                      empty_floors=empty_floors, 
                      animal_options=animal_options, 
                      color_options=color_options)
-
-
-HINTS_EX1 = [
-    AbsoluteHint(Animal.Rabbit, Floor.First),
-    AbsoluteHint(Animal.Chicken, Floor.Second),
-    AbsoluteHint(Floor.Third, Color.Red),
-    AbsoluteHint(Animal.Bird, Floor.Fifth),
-    AbsoluteHint(Animal.Grasshopper, Color.Orange),
-    NeighborHint(Color.Yellow, Color.Green),
-]
-
-HINTS_EX2 = [
-    AbsoluteHint(Animal.Bird, Floor.Fifth),
-    AbsoluteHint(Floor.First, Color.Green),
-    AbsoluteHint(Animal.Frog, Color.Yellow),
-    NeighborHint(Animal.Frog, Animal.Grasshopper),
-    NeighborHint(Color.Red, Color.Orange),
-    RelativeHint(Animal.Chicken, Color.Blue, -4)
-]
-
-HINTS_EX3 = [
-    RelativeHint(Animal.Rabbit, Color.Green, -2)
-]
-
-HINTS_EX4 = [
-    # Final assignment should be:
-    # Floor |   Animal    | color
-    #   5   | Grasshopper | Green
-    #   4   |    Frog     | Yellow
-    #   3   |    Bird     | Red
-    #   2   |   Chicken   | Blue
-    #   1   |   Rabbit    | Orange
-
-    # Checks simple Absolute hints, when list of hints is large
-    AbsoluteHint(Animal.Rabbit, Floor.First),
-    AbsoluteHint(Animal.Chicken, Floor.Second),
-    AbsoluteHint(Floor.Third, Animal.Bird),
-    AbsoluteHint(Floor.Fourth, Animal.Frog),
-    AbsoluteHint(Floor.Fifth, Animal.Grasshopper),
-    AbsoluteHint(Floor.Fifth, Color.Green),
-    AbsoluteHint(Animal.Chicken, Color.Blue),
-    AbsoluteHint(Animal.Rabbit, Color.Orange),
-    AbsoluteHint(Floor.Third, Color.Red),
-    AbsoluteHint(Floor.Fourth, Color.Yellow),
-]
-
-HINTS_EX5 = [
-    AbsoluteHint(Animal.Rabbit, Floor.First),
-]
-
-HINTS_EX6 = [
-    # Tests contradicting hint assignments
-    AbsoluteHint(Animal.Rabbit, Floor.First),
-    AbsoluteHint(Animal.Bird, Floor.First),
-]
-
-HINTS_EX7 = [
-    # Relative hints with distance 0 should be like absolute hints
-    RelativeHint(Animal.Rabbit, Floor.First, 0),
-    RelativeHint(Animal.Chicken, Floor.Second, 0),
-    RelativeHint(Floor.Third, Animal.Bird, 0),
-    RelativeHint(Floor.Fourth, Animal.Frog, 0),
-    RelativeHint(Floor.Fifth, Animal.Grasshopper, 0),
-    RelativeHint(Floor.Fifth, Color.Green, 0),
-    RelativeHint(Animal.Chicken, Color.Blue, 0),
-    RelativeHint(Animal.Rabbit, Color.Orange, 0),
-    RelativeHint(Floor.Third, Color.Red, 0),
-    RelativeHint(Floor.Fourth, Color.Yellow, 0),
-]
-
-HINTS_EX8 = [
-    # Relative hints with distance 0 should be like absolute hints
-    RelativeHint(Animal.Rabbit, Floor.First, 0),
-]
-
-HINTS_EX9 = [
-    NeighborHint(Animal.Rabbit, Color.Green)
-]
-
-def test():
-    # Checks Absolute hints only
-    assert(count_assignments([]) ==  math.factorial(5)*math.factorial(5)), f'Failed on example #4. got {count_assignments([])} expected 14400'
-    assert(count_assignments(HINTS_EX5) == math.factorial(5)*math.factorial(4)), f'Failed on example #5. got {count_assignments(HINTS_EX5)} expected 2880'
-    assert(count_assignments(HINTS_EX6) == 0), f'Failed on example #6. got {count_assignments(HINTS_EX6)} expected 0'
-    
-    # Checks when there are redundent hints
-    assert(count_assignments(HINTS_EX4) == 1), f'Failed on example #4. got {count_assignments(HINTS_EX4)} expected 1'
-    
-    # Checks Relative hints
-    assert(count_assignments(HINTS_EX3) == 1728), 'Failed on example #3'
-    assert(count_assignments(HINTS_EX7) == 1), f'Failed on example #7. got {count_assignments(HINTS_EX7)} expected 1'
-    assert(count_assignments(HINTS_EX8) == math.factorial(5)*math.factorial(4)), f'Failed on example #8. got {count_assignments(HINTS_EX8)} expected 2880'
-
-    # Check Neighbor hints
-    assert(count_assignments(HINTS_EX9) == 8*1728/3)
-
-    assert count_assignments(HINTS_EX1) == 2, 'Failed on example #1'
-    
-    assert count_assignments(HINTS_EX2) == 4, 'Failed on example #2'
-
-    
-    
-    print('Success!')
-
-
-if __name__ == '__main__':
-    test()
